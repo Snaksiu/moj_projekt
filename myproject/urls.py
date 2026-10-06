@@ -20,3 +20,9 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+from django.urls import path
+from boardgames.views import health_check
+
+urlpatterns = [
+    path('api/health/', health_check),
+]
