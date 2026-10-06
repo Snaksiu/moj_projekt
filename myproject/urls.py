@@ -21,8 +21,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 from django.urls import path
-from boardgames.views import health_check
+from boardgames import views
 
 urlpatterns = [
-    path('api/health/', health_check),
+    path('api/health/', views.health_check),
+    path('api/boardgames/', views.list_games),           # Zadanie 4
+    path('api/boardgames/<int:id>/', views.game_detail),  # Zadanie 5
+    path('api/info/', views.info),                         # Zadanie 7
+    path('api/statystyki/', views.stats),                  # Zadanie 8
 ]
