@@ -37,35 +37,28 @@ def game_detail(request, id):
 
 # Zadanie 7 (info)
 def info(request):
-    categories = list(set(g['category'] for g in GAMES))
-    uptime = round(time.time() - START_TIME, 2)
-    
-    data = {
+    return JsonResponse({
         "app_name": "boardgames",
         "app_version": "1.0.0",
         "python_version": sys.version,
         "django_version": django.get_version(),
         "database_type": "in-memory static file",
         "total_records": len(GAMES),
-        "available_categories": categories,
-        "uptime_seconds": uptime
-    }
-    return JsonResponse(data)
+        "available_categories": list(set(g['category'] for g in GAMES)),
+        "uptime_seconds": round(time.time() - START_TIME, 2)
+    })
 
-# Zadanie 8 (statystyki)
 def stats(request):
     prices = [g['price'] for g in GAMES]
-    
     category_counts = {}
     for g in GAMES:
         cat = g['category']
         category_counts[cat] = category_counts.get(cat, 0) + 1
         
-    data = {
+    return JsonResponse({
         "total_records": len(GAMES),
         "category_counts": category_counts,
         "avg_price": round(sum(prices) / len(prices), 2) if prices else 0,
         "min_price": min(prices) if prices else 0,
         "max_price": max(prices) if prices else 0,
-    }
-    return JsonResponse(data)
+    })
